@@ -3,8 +3,27 @@
                     xmlns:sys="clr-namespace:System;assembly=mscorlib"
                     xmlns:s="clr-namespace:DiagramDesigner"
                     xmlns:c="clr-namespace:DiagramDesigner.Controls">
-
     <ContextMenu x:Key="DesignerItemContextMenu">
+        <MenuItem Header="Start" Command="{x:Static s:DesignerCanvas.StartNode}">
+            <!--<MenuItem.Icon>
+                <Image Source="Images/Delete.png" Width="16"/>
+            </MenuItem.Icon>-->
+        </MenuItem>
+        <MenuItem Header="End" Command="{x:Static s:DesignerCanvas.EndNode}">
+            <!--<MenuItem.Icon>
+                <Image Source="Images/Delete.png" Width="16"/>
+            </MenuItem.Icon>-->
+        </MenuItem>
+        <MenuItem Header="StartAndEnd" Command="{x:Static s:DesignerCanvas.StartAndEndNode}">
+            <!--<MenuItem.Icon>
+                <Image Source="Images/Delete.png" Width="16"/>
+            </MenuItem.Icon>-->
+        </MenuItem>
+        <MenuItem Header="Normal" Command="{x:Static s:DesignerCanvas.NormalNode}">
+            <!--<MenuItem.Icon>
+                <Image Source="Images/Delete.png" Width="16"/>
+            </MenuItem.Icon>-->
+        </MenuItem>
         <MenuItem Header="Cut" Command="{x:Static ApplicationCommands.Cut}">
             <MenuItem.Icon>
                 <Image Source="/DiagramDesigner;component/Resources/Images/Cut.png" Width="16"/>
@@ -114,7 +133,7 @@
     </ControlTemplate>
 
     <!-- DragThumb Default Template -->
-    <Style TargetType="{x:Type c:DragThumb}">
+    <Style TargetType="{x:Type c:DragThumb}" x:Key="DragThumbStyle">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type c:DragThumb}">

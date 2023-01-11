@@ -366,15 +366,14 @@ namespace DiagramDesigner
             DefaultStyleKeyProperty.OverrideMetadata(typeof(Connection), new FrameworkPropertyMetadata(typeof(Connection)));            
         }
 
-        public Connection(Connector source, Connector sink, PathFinderTypes pathFinder)
+        public Connection(Connector source, Connector sink, PathFinderTypes pathFinder, string text)
         {
             this.ID = Guid.NewGuid();
             this.Source = source;
             this.pathFinder = pathFinder;
             this.Sink = sink;
-
             this.MouseDown += Connection_MouseDown;
-            
+            this.Text= text;
             //base.Unloaded += new RoutedEventHandler(Connection_Unloaded);
         }
 

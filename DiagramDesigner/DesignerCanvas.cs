@@ -92,6 +92,16 @@ namespace DiagramDesigner
         public Style ConnectionStyle { get; set; }
 
         internal event Action<double> ScaleChanged;
+        public static readonly DependencyProperty PathTextProperty
+            = DependencyProperty.Register("PathText", typeof(string), typeof(Canvas), null);
+        public string PathText
+        {
+            get => (string)this.GetValue(PathTextProperty);
+            set
+            {
+                this.SetValue(PathTextProperty, value);
+            }
+        }
 
         void DesignerCanvas_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
@@ -99,11 +109,11 @@ namespace DiagramDesigner
             {
                 if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
                 {
-                    var scale = e.Delta * 0.002 + ((ScaleTransform) this.LayoutTransform).ScaleX;
+                    var scale = e.Delta * 0.002 + ((ScaleTransform)this.LayoutTransform).ScaleX;
                     scale = scale < 0.05 ? 0.05 : scale;
                     scale = scale > 5 ? 5 : scale;
-                    ((ScaleTransform) this.LayoutTransform).ScaleX = scale;
-                    ((ScaleTransform) this.LayoutTransform).ScaleY = scale;
+                    ((ScaleTransform)this.LayoutTransform).ScaleX = scale;
+                    ((ScaleTransform)this.LayoutTransform).ScaleY = scale;
                     e.Handled = true;
 
                     if (ScaleChanged != null)
@@ -141,7 +151,7 @@ namespace DiagramDesigner
                 }
                 e.Handled = true;
             }
-           
+
         }
 
         public virtual object CreateInstanceFromDragObject(DragObject dragObject)
@@ -173,8 +183,8 @@ namespace DiagramDesigner
 
                     if (this.UseRaster)
                     {
-                        x = Math.Round(x/Raster, 0)*Raster;
-                        y = Math.Round(y/Raster, 0)*Raster;
+                        x = Math.Round(x / Raster, 0) * Raster;
+                        y = Math.Round(y / Raster, 0) * Raster;
                     }
 
                     AddDesignerItem(content as FrameworkElement, new Point(x, y), dragObject.DesiredSize, 0, dragObject.InsertInBackground);
@@ -222,7 +232,7 @@ namespace DiagramDesigner
             }
         }
 
-        public delegate Connection ConnectionGeneratorDelegate(Connector source, Connector sink, PathFinderTypes pathFinderType);
+        public delegate Connection ConnectionGeneratorDelegate(Connector source, Connector sink, PathFinderTypes pathFinderType, string text);
         public ConnectionGeneratorDelegate ConnectionGenerator { get; set; }
 
         public delegate void DesignerCanvasChangedDelegate();
@@ -250,7 +260,7 @@ namespace DiagramDesigner
             get { return _raster; }
             set { _raster = value; }
         }
-
+        private string _pathText;
         internal void raiseLayerChanged(DesignerItem item, int layer)
         {
             var e = ItemLayerChanged;
@@ -345,7 +355,7 @@ namespace DiagramDesigner
             //this.SelectionService.SelectItem(newItem);
             //newItem.Focus();
 
-            raiseDesignerItemAdded(item, newItem);            
+            raiseDesignerItemAdded(item, newItem);
 
             bool layerVisible = false;
             if (!visibleLayers.TryGetValue(layer, out layerVisible) || layerVisible)
@@ -373,15 +383,15 @@ namespace DiagramDesigner
             {
                 if (child is DesignerItem)
                 {
-                    var layer = ((DesignerItem) child).Layer;
-                    
+                    var layer = ((DesignerItem)child).Layer;
+
                     if (!visibleLayers.TryGetValue(layer, out layerVisible) || layerVisible)
                     {
                         child.Visibility = System.Windows.Visibility.Visible;
                     }
                     else if (visibleLayers.TryGetValue(layer, out layerVisible) && !layerVisible)
                     {
-                        child.Visibility = System.Windows.Visibility.Hidden;                 
+                        child.Visibility = System.Windows.Visibility.Hidden;
                     }
                 }
                 else if (child is Connection)
@@ -402,21 +412,21 @@ namespace DiagramDesigner
                 }
             }
 
-            if (SelectedItems.Any(x => ((FrameworkElement) x).Visibility == System.Windows.Visibility.Hidden))
+            if (SelectedItems.Any(x => ((FrameworkElement)x).Visibility == System.Windows.Visibility.Hidden))
                 ClearSelection();
         }
 
         public void SwitchLayerVisibility(int layer, bool visible)
         {
             if (!visibleLayers.ContainsKey(layer))
-                visibleLayers.Add(layer,visible);
+                visibleLayers.Add(layer, visible);
             visibleLayers[layer] = visible;
 
             updateVisibleDesigneritems();
         }
 
         private List<DesignerItem> designerItems;
-        
+
 
         protected override Size MeasureOverride(Size constraint)
         {
@@ -441,10 +451,10 @@ namespace DiagramDesigner
             }
             // add margin 
             size.Width += 10;
-            size.Height += 10;            
+            size.Height += 10;
 
-            return size;            
-        }        
+            return size;
+        }
 
         private void SetConnectorDecoratorTemplate(DesignerItem item)
         {
@@ -455,6 +465,11 @@ namespace DiagramDesigner
                 if (decorator != null && template != null)
                     decorator.Template = template;
             }
+        }
+
+        public string GetPathText()
+        {
+            return PathText;
         }
     }
 }

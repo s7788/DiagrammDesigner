@@ -17,7 +17,7 @@ using Microsoft.Win32;
 
 namespace DiagramDesigner
 {
-    public partial class DesignerCanvas:INotifyPropertyChanged
+    public partial class DesignerCanvas : INotifyPropertyChanged
     {
         private IUndoable<string> diagramState = null;
 
@@ -36,6 +36,18 @@ namespace DiagramDesigner
         public static RoutedCommand DistributeHorizontal = new RoutedCommand();
         public static RoutedCommand DistributeVertical = new RoutedCommand();
         public static RoutedCommand SelectAll = new RoutedCommand();
+        //起始站點
+        public static RoutedCommand StartNode = new RoutedCommand();
+        //結束站點
+        public static RoutedCommand EndNode = new RoutedCommand();
+        //起始和結束站點
+        public static RoutedCommand StartAndEndNode = new RoutedCommand();
+        //一般站點
+        public static RoutedCommand NormalNode = new RoutedCommand();
+        //條件
+        public static RoutedCommand Condition = new RoutedCommand();
+        //重新命名
+        public static RoutedCommand Rename = new RoutedCommand();
 
         public DesignerCanvas()
         {
@@ -69,6 +81,12 @@ namespace DiagramDesigner
             this.CommandBindings.Add(new CommandBinding(DesignerCanvas.DistributeHorizontal, DistributeHorizontal_Executed, Distribute_Enabled));
             this.CommandBindings.Add(new CommandBinding(DesignerCanvas.DistributeVertical, DistributeVertical_Executed, Distribute_Enabled));
             this.CommandBindings.Add(new CommandBinding(DesignerCanvas.SelectAll, SelectAll_Executed));
+            base.CommandBindings.Add(new CommandBinding(StartNode, StartNode_Executed, StartNode_Enabled));
+            base.CommandBindings.Add(new CommandBinding(EndNode, EndNode_Executed, EndNode_Enabled));
+            base.CommandBindings.Add(new CommandBinding(StartAndEndNode, StartAndEndNode_Executed, StartAndEndNode_Enabled));
+            base.CommandBindings.Add(new CommandBinding(NormalNode, NormalNode_Executed, NormalNode_Enabled));
+            base.CommandBindings.Add(new CommandBinding(Condition, Condition_Executed, Condition_Enabled));
+            base.CommandBindings.Add(new CommandBinding(Rename, Rename_Executed, Rename_Enabled));
 
             //this.InputBindings.Add(new KeyBinding(ApplicationCommands.Delete,Key.))
             ApplicationCommands.Delete.InputGestures.Add(new KeyGesture(Key.Delete));
@@ -85,12 +103,12 @@ namespace DiagramDesigner
                 OnPropertyChanged("SelectionLayer");
             };
 
-            this.ConnectionGenerator = (source, sink, pathFinder) => new Connection(source, sink, pathFinder);
+            this.ConnectionGenerator = (source, sink, pathFinder, text) => new Connection(source, sink, pathFinder, text);
 
             this.RequestBringIntoView += DesignerCanvas_RequestBringIntoView;
 
             this.PreviewMouseWheel += DesignerCanvas_PreviewMouseWheel;
-        }      
+        }
 
         public List<ISelectable> SelectedItems
         {
@@ -99,7 +117,7 @@ namespace DiagramDesigner
                 return SelectionService.CurrentSelection;
             }
         }
-       
+
 
         #region New Command
 
@@ -155,7 +173,7 @@ namespace DiagramDesigner
                 Connector sourceConnector = GetConnector(sourceID, sourceConnectorName);
                 Connector sinkConnector = GetConnector(sinkID, sinkConnectorName);
 
-                Connection connection = ConnectionGenerator(sourceConnector, sinkConnector, pathFinder);
+                Connection connection = ConnectionGenerator(sourceConnector, sinkConnector, pathFinder, GetPathText());
                 //Canvas.SetZIndex(connection, Int32.Parse(connectionXML.Element("zIndex").Value));
                 connection.ZIndex = Int32.Parse(connectionXML.Element("zIndex").Value);
                 connection.Color = color;
@@ -188,7 +206,7 @@ namespace DiagramDesigner
 
             return root;
         }
-        
+
 
         #endregion
 
@@ -291,11 +309,11 @@ namespace DiagramDesigner
                     PathFinderTypes pathFinder = (PathFinderTypes)Enum.Parse(typeof(PathFinderTypes), connectionXML.Element("PathFinder").Value);
                     SolidColorBrush color = (SolidColorBrush)new BrushConverter().ConvertFromString(connectionXML.Element("Color").Value);
                     double strokeThickness = Double.Parse(connectionXML.Element("StrokeThickness")?.Value);
-                    
+
                     Connector sourceConnector = GetConnector(newSourceID, sourceConnectorName);
                     Connector sinkConnector = GetConnector(newSinkID, sinkConnectorName);
 
-                    Connection connection = ConnectionGenerator(sourceConnector, sinkConnector, pathFinder);
+                    Connection connection = ConnectionGenerator(sourceConnector, sinkConnector, pathFinder, GetPathText());
                     //Canvas.SetZIndex(connection, Int32.Parse(connectionXML.Element("zIndex").Value));
                     connection.ZIndex = Int32.Parse(connectionXML.Element("zIndex").Value);
                     connection.Color = color;
@@ -584,8 +602,8 @@ namespace DiagramDesigner
 
         private void SendToBack_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            SendItemsToBack(SelectionService.CurrentSelection);            
-        }        
+            SendItemsToBack(SelectionService.CurrentSelection);
+        }
 
         #endregion
 
@@ -848,6 +866,63 @@ namespace DiagramDesigner
 
         #endregion
 
+        #region Condition Command
+        private void Condition_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+        private void Condition_Enabled(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+        #endregion
+
+        #region Rename Command
+        private void Rename_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+        private void Rename_Enabled(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+        #endregion
+
+        #region Node Command
+        private void StartNode_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+        private void StartNode_Enabled(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+        private void EndNode_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+        private void EndNode_Enabled(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+        private void StartAndEndNode_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+        private void StartAndEndNode_Enabled(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+        private void NormalNode_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+
+        }
+        private void NormalNode_Enabled(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+        #endregion
+
         #region Helper Methods
 
         private XElement LoadSerializedDataFromFile()
@@ -1105,8 +1180,8 @@ namespace DiagramDesigner
         public Connector GetConnector(object item, String connectorName)
         {
             DesignerItem designerItem = (from i in this.Children.OfType<DesignerItem>()
-                where i.Content == item
-                select i).FirstOrDefault();
+                                         where i.Content == item
+                                         select i).FirstOrDefault();
 
             Control connectorDecorator = designerItem.Template.FindName("PART_ConnectorDecorator", designerItem) as Control;
             connectorDecorator.ApplyTemplate();
