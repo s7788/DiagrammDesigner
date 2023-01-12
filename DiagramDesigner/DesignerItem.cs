@@ -111,6 +111,16 @@ namespace DiagramDesigner
                                          typeof(DesignerItem),
                                          new FrameworkPropertyMetadata(false));
 
+        public bool IsLinkSelf
+        {
+            get { return (bool)GetValue(IsLinkSelfProperty); }
+            set { SetValue(IsLinkSelfProperty, value); }
+        }
+        public static readonly DependencyProperty IsLinkSelfProperty =
+            DependencyProperty.Register("IsLinkSelf",
+                                         typeof(bool),
+                                         typeof(DesignerItem),
+                                         new FrameworkPropertyMetadata(false));
         #endregion
 
         public bool IsUndeleteable { get; set; }
