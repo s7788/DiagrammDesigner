@@ -347,6 +347,15 @@ namespace DiagramDesigner
         public static readonly DependencyProperty ColorProperty =
             DependencyProperty.Register("Color", typeof(SolidColorBrush), typeof(Connection), new PropertyMetadata(Brushes.Gray));
 
+        public SolidColorBrush PathColor
+        {
+            get { return (SolidColorBrush)GetValue(PathColorProperty); }
+            set { SetValue(PathColorProperty, value); }
+        }
+
+        public static readonly DependencyProperty PathColorProperty =
+            DependencyProperty.Register("PathColor", typeof(SolidColorBrush), typeof(Connection), new PropertyMetadata(Brushes.Gray));
+
         #endregion
 
 
