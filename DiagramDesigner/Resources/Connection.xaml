@@ -97,7 +97,7 @@
                     <c:ArrowPath ContextMenu="{StaticResource ConnectionContextMenu}" x:Name="PART_Arrow"
                           Stroke="{Binding PathColor}" StrokeDashArray="{Binding StrokeDashArray}" StrokeThickness="{Binding StrokeThickness}"
                           StrokeEndLineCap="Triangle"
-                          SnapsToDevicePixels="True"                      
+                          SnapsToDevicePixels="True"                    
                           X1="{Binding AnchorPositionSource.X}"
                           X2="{Binding AnchorPositionSink.X}"
                           Y1="{Binding AnchorPositionSource.Y}"
@@ -114,7 +114,7 @@
                         <DataTrigger Value="True" Binding="{Binding RelativeSource={RelativeSource Self},Path=ShowShadow}">
                             <Setter TargetName="PART_Arrow" Property="Effect">
                                 <Setter.Value>
-                                    <DropShadowEffect Color="Red" Direction="315" ShadowDepth="10" Opacity="0.3"/>
+                                    <DropShadowEffect Color="Black" Direction="315" ShadowDepth="10" Opacity="0.3"/>
                                 </Setter.Value>
                             </Setter>
                         </DataTrigger>

@@ -229,7 +229,7 @@ namespace DiagramDesigner
 
             DependencyObject hitObject = designerCanvas.InputHitTest(hitPoint) as DependencyObject;
             while (hitObject != null &&
-                   hitObject != fixConnector.ParentDesignerItem &&
+                  (hitObject != fixConnector.ParentDesignerItem || fixConnector.ParentDesignerItem.IsLinkSelf) &&
                    hitObject.GetType() != typeof(DesignerCanvas))
             {
                 if (hitObject is Connector)

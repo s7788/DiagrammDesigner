@@ -8,6 +8,9 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using DiagramDesigner.PathFinder;
+using System.Drawing;
+using Point = System.Windows.Point;
+using Size = System.Windows.Size;
 
 namespace DiagramDesigner
 {
@@ -232,7 +235,7 @@ namespace DiagramDesigner
             }
         }
 
-        public delegate Connection ConnectionGeneratorDelegate(Connector source, Connector sink, PathFinderTypes pathFinderType, string text);
+        public delegate Connection ConnectionGeneratorDelegate(Connector source, Connector sink, PathFinderTypes pathFinderType, string text, SolidColorBrush pathColor);
         public ConnectionGeneratorDelegate ConnectionGenerator { get; set; }
 
         public delegate void DesignerCanvasChangedDelegate();
@@ -467,9 +470,18 @@ namespace DiagramDesigner
             }
         }
 
+        private SolidColorBrush _pathColor = new SolidColorBrush(Colors.Gray);
         public string GetPathText()
         {
             return PathText;
+        }
+        protected virtual void SetPathColor(SolidColorBrush brushes)
+        {
+            _pathColor = brushes;
+        }
+        public SolidColorBrush GetPathColor()
+        {
+            return _pathColor;
         }
     }
 }

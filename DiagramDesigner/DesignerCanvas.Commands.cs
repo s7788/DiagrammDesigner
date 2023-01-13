@@ -103,7 +103,7 @@ namespace DiagramDesigner
                 OnPropertyChanged("SelectionLayer");
             };
 
-            this.ConnectionGenerator = (source, sink, pathFinder, text) => new Connection(source, sink, pathFinder, text);
+            this.ConnectionGenerator = (source, sink, pathFinder, text, pathColor) => new Connection(source, sink, pathFinder, text, pathColor);
 
             this.RequestBringIntoView += DesignerCanvas_RequestBringIntoView;
 
@@ -173,7 +173,7 @@ namespace DiagramDesigner
                 Connector sourceConnector = GetConnector(sourceID, sourceConnectorName);
                 Connector sinkConnector = GetConnector(sinkID, sinkConnectorName);
 
-                Connection connection = ConnectionGenerator(sourceConnector, sinkConnector, pathFinder, GetPathText());
+                Connection connection = ConnectionGenerator(sourceConnector, sinkConnector, pathFinder, GetPathText(), GetPathColor());
                 //Canvas.SetZIndex(connection, Int32.Parse(connectionXML.Element("zIndex").Value));
                 connection.ZIndex = Int32.Parse(connectionXML.Element("zIndex").Value);
                 connection.Color = color;
@@ -313,7 +313,7 @@ namespace DiagramDesigner
                     Connector sourceConnector = GetConnector(newSourceID, sourceConnectorName);
                     Connector sinkConnector = GetConnector(newSinkID, sinkConnectorName);
 
-                    Connection connection = ConnectionGenerator(sourceConnector, sinkConnector, pathFinder, GetPathText());
+                    Connection connection = ConnectionGenerator(sourceConnector, sinkConnector, pathFinder, GetPathText(), GetPathColor());
                     //Canvas.SetZIndex(connection, Int32.Parse(connectionXML.Element("zIndex").Value));
                     connection.ZIndex = Int32.Parse(connectionXML.Element("zIndex").Value);
                     connection.Color = color;

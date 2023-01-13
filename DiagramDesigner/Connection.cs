@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -116,7 +117,7 @@ namespace DiagramDesigner
         public PathFinderTypes PathFinder
         {
             get
-            {                
+            {
                 return pathFinder;
             }
             set
@@ -189,7 +190,7 @@ namespace DiagramDesigner
                 if (anchorAngleSink != value)
                 {
                     anchorAngleSink = value;
-                    OnPropertyChanged("AnchorAngleSink");                    
+                    OnPropertyChanged("AnchorAngleSink");
                 }
             }
         }
@@ -199,8 +200,8 @@ namespace DiagramDesigner
             get
             {
                 return PathFinderHelper.GetPathFinder(this.pathFinder)
-                    .GetTextPosition(AnchorPositionSource, AnchorPositionSink, pointsList);                
-            }            
+                    .GetTextPosition(AnchorPositionSource, AnchorPositionSink, pointsList);
+            }
         }
 
         private string text = "";
@@ -328,7 +329,7 @@ namespace DiagramDesigner
 
         public static readonly DependencyProperty DescriptionProperty =
             DependencyProperty.Register("Description", typeof(string), typeof(Connection), new PropertyMetadata(null));
-        
+
         public bool ShowShadow
         {
             get { return (bool)GetValue(ShowShadowProperty); }
@@ -369,20 +370,21 @@ namespace DiagramDesigner
         public static readonly DependencyProperty ZIndexProperty =
             DependencyProperty.Register("ZIndex", typeof(int), typeof(Connection), new PropertyMetadata(0));
 
-        
+
         static Connection()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(Connection), new FrameworkPropertyMetadata(typeof(Connection)));            
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(Connection), new FrameworkPropertyMetadata(typeof(Connection)));
         }
 
-        public Connection(Connector source, Connector sink, PathFinderTypes pathFinder, string text)
+        public Connection(Connector source, Connector sink, PathFinderTypes pathFinder, string text, SolidColorBrush pathColor)
         {
             this.ID = Guid.NewGuid();
             this.Source = source;
             this.pathFinder = pathFinder;
             this.Sink = sink;
             this.MouseDown += Connection_MouseDown;
-            this.Text= text;
+            this.Text = text;
+            this.PathColor = pathColor;
             //base.Unloaded += new RoutedEventHandler(Connection_Unloaded);
         }
 
@@ -391,7 +393,7 @@ namespace DiagramDesigner
             //Stops Event Bubbbling, Connections stays in Focus!
             e.Handled = true;
         }
-       
+
         //void Connection_KeyUp(object sender, KeyEventArgs e)
         //{
         //    if (e.Key == Key.Delete)
@@ -468,9 +470,8 @@ namespace DiagramDesigner
             base.OnApplyTemplate();
 
             templateApplied = true;
-
             UpdateAnchorPosition();
-        } 
+        }
         private void UpdateAnchorPosition()
         {
             if (templateApplied)
@@ -493,9 +494,9 @@ namespace DiagramDesigner
                         this.PathGeometry.GetPointAtFractionLength(0.5, out pathMidPoint, out pathTangentAtMidPoint);
 
                         // get angle from tangent vector
-                        this.AnchorAngleSource = Math.Atan2(-pathTangentAtStartPoint.Y, -pathTangentAtStartPoint.X)*
-                                                 (180/Math.PI);
-                        this.AnchorAngleSink = Math.Atan2(pathTangentAtEndPoint.Y, pathTangentAtEndPoint.X)*(180/Math.PI);
+                        this.AnchorAngleSource = Math.Atan2(-pathTangentAtStartPoint.Y, -pathTangentAtStartPoint.X) *
+                                                 (180 / Math.PI);
+                        this.AnchorAngleSink = Math.Atan2(pathTangentAtEndPoint.Y, pathTangentAtEndPoint.X) * (180 / Math.PI);
 
                         this.AnchorAngleSink = (this.AnchorAngleSink % 180 == 0 && this.AnchorAngleSink != 0) ? 0 : this.AnchorAngleSink;
 

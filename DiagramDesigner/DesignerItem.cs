@@ -174,6 +174,7 @@ namespace DiagramDesigner
         public DesignerItem()
             : this(Guid.NewGuid())
         {
+            IsLinkSelf= true;
         }
         
         public override void OnApplyTemplate()

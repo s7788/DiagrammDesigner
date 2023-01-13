@@ -292,14 +292,14 @@ namespace DiagramDesigner.PathFinder
             else
                 linePoints = OptimizeLinePoints(linePoints, new Rect[] { rectSource }, source.Orientation, GetOpositeOrientation(source.Orientation));
 
-            if (source.Orientation == ConnectorOrientation.Left)
-                linePoints.Insert(0, new Point(startPoint.X + margin, startPoint.Y));
-            else if (source.Orientation == ConnectorOrientation.Right)
-                linePoints.Insert(0, new Point(startPoint.X - margin, startPoint.Y));
-            else if (source.Orientation == ConnectorOrientation.Top)
-                linePoints.Insert(0, new Point(startPoint.X, startPoint.Y + margin));
-            else if (source.Orientation == ConnectorOrientation.Bottom)
-                linePoints.Insert(0, new Point(startPoint.X, startPoint.Y - margin));
+            //if (source.Orientation == ConnectorOrientation.Left)
+            //    linePoints.Insert(0, new Point(startPoint.X + margin, startPoint.Y));
+            //else if (source.Orientation == ConnectorOrientation.Right)
+            //    linePoints.Insert(0, new Point(startPoint.X - margin, startPoint.Y));
+            //else if (source.Orientation == ConnectorOrientation.Top)
+            //    linePoints.Insert(0, new Point(startPoint.X, startPoint.Y + margin));
+            //else if (source.Orientation == ConnectorOrientation.Bottom)
+            //    linePoints.Insert(0, new Point(startPoint.X, startPoint.Y - margin));
 
             return linePoints;
         }

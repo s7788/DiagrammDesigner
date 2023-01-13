@@ -73,7 +73,7 @@ namespace DiagramDesigner
                 Connector sourceConnector = this.sourceConnector;
                 Connector sinkConnector = this.HitConnector;
                 Connection newConnection = designerCanvas.ConnectionGenerator(sourceConnector, sinkConnector,
-                    designerCanvas.PathFinder, designerCanvas.GetPathText());
+                    designerCanvas.PathFinder, designerCanvas.GetPathText(), designerCanvas.GetPathColor());
 
                 if (designerCanvas.ConnectionStyle != null)
                     newConnection.Style = designerCanvas.ConnectionStyle;
@@ -154,7 +154,7 @@ namespace DiagramDesigner
 
             DependencyObject hitObject = designerCanvas.InputHitTest(hitPoint) as DependencyObject;
             while (hitObject != null &&
-                   hitObject != sourceConnector.ParentDesignerItem &&
+                   (hitObject != sourceConnector.ParentDesignerItem || sourceConnector.ParentDesignerItem.IsLinkSelf) &&
                    hitObject.GetType() != typeof(DesignerCanvas))
             {
                 if (hitObject is Connector)

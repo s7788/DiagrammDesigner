@@ -72,6 +72,14 @@ namespace DiagramDesigner.Controls
             get { return (List<Point>)base.GetValue(PointsProperty); }
             set { base.SetValue(PointsProperty, value); }
         }
+        public string LineType
+        {
+            get { return (string)GetValue(LineTypeProperty); }
+            set { SetValue(LineTypeProperty, value); }
+        }
+
+        public static readonly DependencyProperty LineTypeProperty =
+            DependencyProperty.Register("LineType", typeof(string), typeof(Connection), new PropertyMetadata("Line"));
 
         #endregion
 
@@ -114,7 +122,10 @@ namespace DiagramDesigner.Controls
             {
                 foreach (var point in Points)
                 {
-                    context.LineTo(point, true, true);                    
+                    if(LineType == "Line")
+                        context.LineTo(point, true, true);
+                    else if (LineType == "Arc")
+                        context.ArcTo(point, new Size(50,50), 90.0, true,SweepDirection.Clockwise,true,true);
                 }
                 //The Previous Point (before the Endpoint) should be used for Angle Caluculation!
                 if (Points.Count > 1)
