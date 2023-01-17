@@ -317,6 +317,10 @@ namespace DiagramDesigner
             }
         }
 
+        public Point SourceArcSegmentAnchor { get; set; }
+        public Point TargetObjectArcSegmentAnchor { get; set; }
+
+
         #endregion
 
         #region Dependency Properties
@@ -357,6 +361,7 @@ namespace DiagramDesigner
         public static readonly DependencyProperty PathColorProperty =
             DependencyProperty.Register("PathColor", typeof(SolidColorBrush), typeof(Connection), new PropertyMetadata(Brushes.Gray));
 
+
         #endregion
 
 
@@ -371,12 +376,28 @@ namespace DiagramDesigner
             DependencyProperty.Register("ZIndex", typeof(int), typeof(Connection), new PropertyMetadata(0));
 
 
+        private bool _isArc;
+        public bool IsArc
+        {
+            get => _isArc;
+            set
+            {
+                _isArc = value;
+                OnPropertyChanged("IsArc");
+            }
+        }
         static Connection()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(Connection), new FrameworkPropertyMetadata(typeof(Connection)));
         }
 
-        public Connection(Connector source, Connector sink, PathFinderTypes pathFinder, string text, SolidColorBrush pathColor)
+        public Connection(
+            Connector source,
+            Connector sink,
+            PathFinderTypes pathFinder,
+            string text,
+            SolidColorBrush pathColor,
+            bool isArc)
         {
             this.ID = Guid.NewGuid();
             this.Source = source;
@@ -385,6 +406,7 @@ namespace DiagramDesigner
             this.MouseDown += Connection_MouseDown;
             this.Text = text;
             this.PathColor = pathColor;
+            this.IsArc = isArc;
             //base.Unloaded += new RoutedEventHandler(Connection_Unloaded);
         }
 

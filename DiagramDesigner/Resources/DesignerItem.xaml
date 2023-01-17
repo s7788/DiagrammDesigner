@@ -83,8 +83,8 @@
 
     <!-- Connector Style -->
     <Style TargetType="{x:Type s:Connector}">
-        <Setter Property="Width" Value="14"/>
-        <Setter Property="Height" Value="14"/>
+        <Setter Property="Width" Value="10"/>
+        <Setter Property="Height" Value="10"/>
         <Setter Property="Cursor" Value="Cross"/>
         <Setter Property="SnapsToDevicePixels" Value="true"/>
         <Setter Property="Template">
@@ -92,7 +92,7 @@
                 <ControlTemplate TargetType="{x:Type s:Connector}">
                     <Grid>
                         <!-- transparent extra space makes connector easier to hit -->
-                        <Rectangle Fill="Transparent" Margin="-2"/>
+                        <!--<Rectangle Fill="Red" Margin="-2"/>-->
                         <Rectangle Fill="Lavender" StrokeThickness="1" Stroke="#AA000080"/>
                     </Grid>
                 </ControlTemplate>
@@ -101,14 +101,18 @@
     </Style>
 
     <!-- ConnectorDecoratorTemplate Default Template -->
-    <!--<ControlTemplate x:Key="ConnectorDecoratorTemplate" TargetType="{x:Type Control}">
+    <ControlTemplate x:Key="ConnectorDecoratorTemplate" TargetType="{x:Type Control}">
         <Grid Margin="-5">
             <s:Connector x:Name="Left" Orientation="Left" VerticalAlignment="Center" HorizontalAlignment="Left"/>
             <s:Connector x:Name="Top" Orientation="Top" VerticalAlignment="Top" HorizontalAlignment="Center"/>
             <s:Connector x:Name="Right" Orientation="Right" VerticalAlignment="Center" HorizontalAlignment="Right"/>
             <s:Connector x:Name="Bottom" Orientation="Bottom" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+            <s:Connector x:Name="SourceArc" OnlyOneConnectionCanStart="True" 
+                         Visibility="Visible" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+            <s:Connector x:Name="TargetArc" OnlyOneConnectionCanEnd="True" 
+                         Visibility="Visible" HorizontalAlignment="Right" VerticalAlignment="Center"/>
         </Grid>
-    </ControlTemplate>-->
+    </ControlTemplate>
 
     <!-- ResizeDecorator Default Template -->
     <ControlTemplate x:Key="ResizeDecoratorTemplate" TargetType="{x:Type Control}">
@@ -168,7 +172,18 @@
                                           Content="{TemplateBinding ContentControl.Content}"
                                           Margin="{TemplateBinding ContentControl.Padding}"/>
                         <!-- PART_ConnectorDecorator -->
-                        <Control x:Name="PART_ConnectorDecorator"/>
+                        <Grid Margin="-5" x:Name="PART_ConnectorDecorator">
+                            <s:Connector x:Name="Left" Orientation="Left" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                            <s:Connector x:Name="Top" Orientation="Top" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+                            <s:Connector x:Name="Right" Orientation="Right" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                            <s:Connector x:Name="Bottom" Orientation="Bottom" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+                            <s:Connector x:Name="SourceArc" OnlyOneConnectionCanStart="True" 
+                         Visibility="Visible" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+                            <s:Connector x:Name="TargetArc" OnlyOneConnectionCanEnd="True" 
+                         Visibility="Visible" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                        </Grid>
+                        <!--<Control x:Name="PART_ConnectorDecorator"
+                                 Template="{StaticResource ConnectorDecoratorTemplate}"/>-->
                     </Grid>
                     <ControlTemplate.Triggers>
                         <DataTrigger Value="False" Binding="{Binding RelativeSource={RelativeSource Self},Path=IsLinkSelf}">

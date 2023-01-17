@@ -72,7 +72,7 @@ namespace DiagramDesigner
             adornerCanvas = new Canvas();
             this.visualChildren = new VisualCollection(this);
             this.visualChildren.Add(adornerCanvas);
-            
+
             this.connection = connection;
             this.connection.PropertyChanged += new PropertyChangedEventHandler(AnchorPositionChanged);
 
@@ -83,7 +83,7 @@ namespace DiagramDesigner
 
             base.Unloaded += new RoutedEventHandler(ConnectionAdorner_Unloaded);
         }
-      
+
         void AnchorPositionChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName.Equals("AnchorPositionSource"))
@@ -208,7 +208,7 @@ namespace DiagramDesigner
                 targetOrientation = HitConnector.Orientation;
             else
                 targetOrientation = dragConnector.Orientation;
-            
+
             List<Point> linePoints = PathFinderHelper.GetPathFinder(this.connection.pathFinder).GetConnectionLine(fixConnector.GetInfo(), position, targetOrientation);
 
             if (linePoints.Count > 0)

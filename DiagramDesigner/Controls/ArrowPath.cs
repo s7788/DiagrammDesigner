@@ -72,15 +72,20 @@ namespace DiagramDesigner.Controls
             get { return (List<Point>)base.GetValue(PointsProperty); }
             set { base.SetValue(PointsProperty, value); }
         }
-        public string LineType
+        public bool IsArc
         {
-            get { return (string)GetValue(LineTypeProperty); }
-            set { SetValue(LineTypeProperty, value); }
+            get { return (bool)GetValue(IsArcProperty); }
+            set { SetValue(IsArcProperty, value); }
         }
 
-        public static readonly DependencyProperty LineTypeProperty =
-            DependencyProperty.Register("LineType", typeof(string), typeof(Connection), new PropertyMetadata("Line"));
+        public static readonly DependencyProperty IsArcProperty =
+            DependencyProperty.Register("IsArc", typeof(bool), typeof(ArrowPath), new PropertyMetadata(false));
 
+        //Arc Segment  
+        public static readonly DependencyProperty SourceArcSegmentAnchorProperty = DependencyProperty.Register("SourceArcSegmentAnchor", typeof(Point), typeof(ArrowPath), new PropertyMetadata());
+        public static readonly DependencyProperty TargetArcSegmentAnchorProperty = DependencyProperty.Register("TargetArcSegmentAnchor", typeof(Point), typeof(ArrowPath), new PropertyMetadata());
+        public Point SourceArcSegmentAnchor { get => (Point)GetValue(SourceArcSegmentAnchorProperty); set => SetValue(SourceArcSegmentAnchorProperty, value); }
+        public Point TargetArcSegmentAnchor { get => (Point)GetValue(TargetArcSegmentAnchorProperty); set => SetValue(TargetArcSegmentAnchorProperty, value); }
         #endregion
 
         #region Overrides
@@ -92,14 +97,14 @@ namespace DiagramDesigner.Controls
                 // Create a StreamGeometry for describing the shape
                 StreamGeometry geometry = new StreamGeometry();
                 geometry.FillRule = FillRule.EvenOdd;
-                
+
                 this.Fill = this.Stroke;
 
                 using (StreamGeometryContext context = geometry.Open())
                 {
                     InternalDrawArrowGeometry(context);
                 }
-                
+
                 // Freeze the geometry for performance benefits
                 geometry.Freeze();
 
@@ -113,6 +118,7 @@ namespace DiagramDesigner.Controls
 
         private void InternalDrawArrowGeometry(StreamGeometryContext context)
         {
+
             Point pt1 = new Point(X1, this.Y1);
             Point pt2 = new Point(X2, this.Y2);
 
@@ -122,10 +128,10 @@ namespace DiagramDesigner.Controls
             {
                 foreach (var point in Points)
                 {
-                    if(LineType == "Line")
+                    if (!IsArc)
                         context.LineTo(point, true, true);
-                    else if (LineType == "Arc")
-                        context.ArcTo(point, new Size(50,50), 90.0, true,SweepDirection.Clockwise,true,true);
+                    else
+                        context.ArcTo(point, new Size(50, 50), 90.0, true, SweepDirection.Clockwise, true, true);
                 }
                 //The Previous Point (before the Endpoint) should be used for Angle Caluculation!
                 if (Points.Count > 1)
@@ -137,16 +143,19 @@ namespace DiagramDesigner.Controls
             double sint = Math.Sin(theta);
             double cost = Math.Cos(theta);
 
-            Point pt3 = new Point(
-                X2 + (HeadWidth * cost - HeadHeight * sint),
-                Y2 + (HeadWidth * sint + HeadHeight * cost));
-
-            Point pt4 = new Point(
-                X2 + (HeadWidth * cost + HeadHeight * sint),
-                Y2 - (HeadHeight * cost - HeadWidth * sint));
-
             context.BeginFigure(pt2, true, false);
-            context.PolyLineTo(new[] {pt3, pt4, pt2}, true, true);                        
+            if (!IsArc)
+            {
+                Point pt3 = new Point(
+               X2 + (HeadWidth * cost - HeadHeight * sint),
+               Y2 + (HeadWidth * sint + HeadHeight * cost));
+
+                Point pt4 = new Point(
+                    X2 + (HeadWidth * cost + HeadHeight * sint),
+                    Y2 - (HeadHeight * cost - HeadWidth * sint));
+
+                context.PolyLineTo(new[] { pt3, pt4, pt2 }, true, true);
+            }
         }
 
         #endregion

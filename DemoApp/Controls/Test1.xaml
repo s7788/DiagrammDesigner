@@ -18,16 +18,18 @@
     <Grid>
             
     </Grid>
-    <diagramDesigner:DesignerItem.ConnectorDecoratorTemplate>
+    <!--<diagramDesigner:DesignerItem.ConnectorDecoratorTemplate>
         <ControlTemplate>
             <controls:RelativePositionPanel Margin="-4">
                 <diagramDesigner:Connector x:Name="Bottom" IsSinkConnector="False" OnlyOneConnectionCanStart="True" Orientation="Bottom" controls:RelativePositionPanel.RelativePosition="0.5,0.9"/>
                 <diagramDesigner:Connector x:Name="Top" IsSourceConnector="False" OnlyOneConnectionCanEnd="True" Orientation="Top" controls:RelativePositionPanel.RelativePosition="0.5,0.1"/>
                 <diagramDesigner:Connector x:Name="Left" Orientation="Left" controls:RelativePositionPanel.RelativePosition="0.13,0.5"/>
                 <diagramDesigner:Connector x:Name="Right" Orientation="Right" controls:RelativePositionPanel.RelativePosition="0.87,0.5"/>
+                --><!--<diagramDesigner:Connector x:Name="SourceArc" OnlyOneConnectionCanStart="True" Orientation="Top" controls:RelativePositionPanel.RelativePosition="0.5,0" Visibility="Collapsed"/>
+                <diagramDesigner:Connector x:Name="TargetArc" OnlyOneConnectionCanEnd="True" Orientation="Right" controls:RelativePositionPanel.RelativePosition="1,0.5" Visibility="Collapsed"/>--><!--
             </controls:RelativePositionPanel>
         </ControlTemplate>
-    </diagramDesigner:DesignerItem.ConnectorDecoratorTemplate>
+    </diagramDesigner:DesignerItem.ConnectorDecoratorTemplate>-->
     <diagramDesigner:DesignerItem.DragThumbTemplate>
         <ControlTemplate>
             <Path Data="M 0,0 H 60 V40 H 0 Z" Stretch="Fill" IsHitTestVisible="True" Fill="Transparent" Stroke="Transparent"/>

@@ -96,15 +96,15 @@
                     <Canvas DataContext="{Binding RelativeSource={RelativeSource TemplatedParent}}">
                     <c:ArrowPath ContextMenu="{StaticResource ConnectionContextMenu}" x:Name="PART_Arrow"
                           Stroke="{Binding PathColor}" StrokeDashArray="{Binding StrokeDashArray}" StrokeThickness="{Binding StrokeThickness}"
-                          StrokeEndLineCap="Triangle"
-                          SnapsToDevicePixels="True"                    
+                          StrokeEndLineCap="Triangle" IsArc="{Binding IsArc,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                          SnapsToDevicePixels="True"                  
                           X1="{Binding AnchorPositionSource.X}"
                           X2="{Binding AnchorPositionSink.X}"
                           Y1="{Binding AnchorPositionSource.Y}"
-                          Y2="{Binding AnchorPositionSink.Y}"  
-                          Points="{Binding Points}"
-                          />
-                        <TextBlock Canvas.Left="{Binding AnchorPositionMiddle.X}" Canvas.Top="{Binding AnchorPositionMiddle.Y}" Text="{Binding Text}">
+                          Y2="{Binding AnchorPositionSink.Y}"   
+                          Points="{Binding Points}" />
+                        <TextBlock Canvas.Left="{Binding AnchorPositionMiddle.X}" 
+                                   Canvas.Top="{Binding AnchorPositionMiddle.Y}" Text="{Binding Text}">
                             <!--<TextBlock.LayoutTransform>
                                 <RotateTransform Angle="{Binding AnchorAngleSink}" />
                             </TextBlock.LayoutTransform>-->
@@ -118,7 +118,6 @@
                                 </Setter.Value>
                             </Setter>
                         </DataTrigger>
-
                         <DataTrigger Value="Arrow" Binding="{Binding RelativeSource={RelativeSource Self},Path=SinkArrowSymbol}">
                             <Setter TargetName="PART_Arrow" Property="HeadWidth" Value="10"/>
                             <Setter TargetName="PART_Arrow" Property="HeadHeight" Value="5"/>

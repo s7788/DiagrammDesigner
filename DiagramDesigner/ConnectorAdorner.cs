@@ -15,6 +15,7 @@ namespace DiagramDesigner
         private DesignerCanvas designerCanvas;
         private Connector sourceConnector;
         private Pen drawingPen;
+        private bool _isArc = false;
 
         private DesignerItem hitDesignerItem;
         private DesignerItem HitDesignerItem
@@ -67,14 +68,25 @@ namespace DiagramDesigner
             }
 
             if (HitConnector != null && HitConnector.IsSinkConnector &&
-                (!HitConnector.OnlyOneConnectionCanEnd || !HitConnector.Connections.Any(x=> Equals(x.Sink, HitConnector))))
-                 
-            {
-                Connector sourceConnector = this.sourceConnector;
-                Connector sinkConnector = this.HitConnector;
-                Connection newConnection = designerCanvas.ConnectionGenerator(sourceConnector, sinkConnector,
-                    designerCanvas.PathFinder, designerCanvas.GetPathText(), designerCanvas.GetPathColor());
+                (!HitConnector.OnlyOneConnectionCanEnd || !HitConnector.Connections.Any(x => Equals(x.Sink, HitConnector))))
 
+            {
+                Connector sourceConnector = null;
+                Connector sinkConnector = null;
+                //畫曲線
+                if (_isArc)
+                {
+                    sourceConnector = hitDesignerItem.SourceArcSegmentAnchor;
+                    sinkConnector = hitDesignerItem.TargetArcSegmentAnchor;
+                }
+                else
+                {
+                    sourceConnector = this.sourceConnector;
+                    sinkConnector = this.HitConnector;
+                }
+                Connection newConnection = designerCanvas.ConnectionGenerator(sourceConnector, sinkConnector,
+                    designerCanvas.PathFinder, designerCanvas.GetPathText(), designerCanvas.GetPathColor(), _isArc);
+                
                 if (designerCanvas.ConnectionStyle != null)
                     newConnection.Style = designerCanvas.ConnectionStyle;
 
@@ -166,6 +178,9 @@ namespace DiagramDesigner
                 if (hitObject is DesignerItem)
                 {
                     HitDesignerItem = hitObject as DesignerItem;
+                    if (hitObject == sourceConnector.ParentDesignerItem)
+                        _isArc = true;
+
                     if (!hitConnectorFlag)
                         HitConnector = null;
                     return;
@@ -175,6 +190,7 @@ namespace DiagramDesigner
 
             HitConnector = null;
             HitDesignerItem = null;
+            _isArc = false;
         }
     }
 }

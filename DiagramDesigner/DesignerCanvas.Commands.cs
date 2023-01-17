@@ -103,7 +103,7 @@ namespace DiagramDesigner
                 OnPropertyChanged("SelectionLayer");
             };
 
-            this.ConnectionGenerator = (source, sink, pathFinder, text, pathColor) => new Connection(source, sink, pathFinder, text, pathColor);
+            this.ConnectionGenerator = (source, sink, pathFinder, text, pathColor, isArc) => new Connection(source, sink, pathFinder, text, pathColor, isArc);
 
             this.RequestBringIntoView += DesignerCanvas_RequestBringIntoView;
 
@@ -1104,7 +1104,7 @@ namespace DiagramDesigner
 
             foreach (DesignerItem item in SelectionService.CurrentSelection.OfType<DesignerItem>())
             {
-                Control cd = item.Template.FindName("PART_ConnectorDecorator", item) as Control;
+                Grid cd = item.Template.FindName("PART_ConnectorDecorator", item) as Grid;
 
                 List<Connector> connectors = new List<Connector>();
                 GetConnectors(cd, connectors);

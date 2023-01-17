@@ -93,6 +93,7 @@ namespace DiagramDesigner
             element.SetValue(ConnectorDecoratorTemplateProperty, value);
         }
 
+        
         #endregion
 
         #region IsDragConnectionOver
@@ -158,6 +159,25 @@ namespace DiagramDesigner
 
         public static readonly DependencyProperty ZIndexProperty =
             DependencyProperty.Register("ZIndex", typeof(int), typeof(DesignerItem), new PropertyMetadata(0));
+        public Connector SourceArcSegmentAnchor { get; set; }
+        public Connector TargetArcSegmentAnchor { get; set; }
+        //public Connector SourceArcSegmentAnchor
+        //{
+        //    get { return (Connector)GetValue(SourceArcSegmentAnchorProperty); }
+        //    set { SetValue(SourceArcSegmentAnchorProperty, value); }
+        //}
+
+        //public static readonly DependencyProperty SourceArcSegmentAnchorProperty =
+        //    DependencyProperty.Register("SourceArcSegmentAnchor", typeof(Connector), typeof(DesignerItem), new PropertyMetadata(null));
+
+        //public Connector TargetArcSegmentAnchor
+        //{
+        //    get { return (Connector)GetValue(TargetArcSegmentAnchorProperty); }
+        //    set { SetValue(TargetArcSegmentAnchorProperty, value); }
+        //}
+
+        //public static readonly DependencyProperty TargetArcSegmentAnchorProperty =
+        //    DependencyProperty.Register("TargetArcSegmentAnchor", typeof(Connector), typeof(DesignerItem), new PropertyMetadata(null));
 
         static DesignerItem()
         {
@@ -188,9 +208,10 @@ namespace DiagramDesigner
                 if (template != null)
                     thumb.Template = template;
             }
-
-            ConnectorDecorator = this.GetTemplateChild("PART_ConnectorDecorator") as Control;
-            
+            Grid t = this.GetTemplateChild("PART_ConnectorDecorator") as Grid;
+            //ConnectorDecorator = this.GetTemplateChild("PART_ConnectorDecorator") as Control;
+            SourceArcSegmentAnchor = (Connector)t.FindName("SourceArc");
+            TargetArcSegmentAnchor = (Connector)t.FindName("TargetArc");
             base.OnApplyTemplate();
         }
 

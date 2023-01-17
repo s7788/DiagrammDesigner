@@ -11,6 +11,8 @@ using DiagramDesigner.PathFinder;
 using System.Drawing;
 using Point = System.Windows.Point;
 using Size = System.Windows.Size;
+using System.Runtime.CompilerServices;
+using System.Diagnostics;
 
 namespace DiagramDesigner
 {
@@ -105,6 +107,23 @@ namespace DiagramDesigner
                 this.SetValue(PathTextProperty, value);
             }
         }
+        public static readonly DependencyProperty PathColorProperty
+    = DependencyProperty.Register("PathColor", typeof(SolidColorBrush), typeof(Canvas), new FrameworkPropertyMetadata(new SolidColorBrush(Colors.Gray)));
+        public SolidColorBrush PathColor
+        {
+            get => (SolidColorBrush)this.GetValue(PathColorProperty);
+            set => this.SetValue(PathColorProperty, value);
+        }
+
+        public Point MousePoint
+        {
+            get { return (Point)GetValue(MousePointProperty); }
+            set { SetValue(MousePointProperty, value); }
+        }
+
+        public static readonly DependencyProperty MousePointProperty =
+            DependencyProperty.Register("MousePoint", typeof(Point), typeof(Canvas), new PropertyMetadata(null));
+
 
         void DesignerCanvas_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
@@ -133,7 +152,8 @@ namespace DiagramDesigner
         protected override void OnMouseMove(MouseEventArgs e)
         {
             base.OnMouseMove(e);
-
+            MousePoint = Mouse.GetPosition(this);
+            Debug.WriteLine(MousePoint);
             // if mouse button is not pressed we have no drag operation, ...
             if (e.LeftButton != MouseButtonState.Pressed && (!SelectionNeedsCtrl || Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)))
                 this.rubberbandSelectionStartPoint = null;
@@ -235,7 +255,7 @@ namespace DiagramDesigner
             }
         }
 
-        public delegate Connection ConnectionGeneratorDelegate(Connector source, Connector sink, PathFinderTypes pathFinderType, string text, SolidColorBrush pathColor);
+        public delegate Connection ConnectionGeneratorDelegate(Connector source, Connector sink, PathFinderTypes pathFinderType, string text, SolidColorBrush pathColor, bool isArc = false);
         public ConnectionGeneratorDelegate ConnectionGenerator { get; set; }
 
         public delegate void DesignerCanvasChangedDelegate();
@@ -470,18 +490,17 @@ namespace DiagramDesigner
             }
         }
 
-        private SolidColorBrush _pathColor = new SolidColorBrush(Colors.Gray);
         public string GetPathText()
         {
             return PathText;
         }
         protected virtual void SetPathColor(SolidColorBrush brushes)
         {
-            _pathColor = brushes;
+            PathColor = brushes;
         }
         public SolidColorBrush GetPathColor()
         {
-            return _pathColor;
+            return PathColor;
         }
     }
 }
