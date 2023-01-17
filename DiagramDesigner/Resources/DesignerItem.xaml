@@ -172,7 +172,7 @@
                                           Content="{TemplateBinding ContentControl.Content}"
                                           Margin="{TemplateBinding ContentControl.Padding}"/>
                         <!-- PART_ConnectorDecorator -->
-                        <Grid Margin="-5" x:Name="PART_ConnectorDecorator">
+                        <Grid Margin="-5" x:Name="PART_ConnectorDecorator" Visibility="Hidden">
                             <s:Connector x:Name="Left" Orientation="Left" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                             <s:Connector x:Name="Top" Orientation="Top" VerticalAlignment="Top" HorizontalAlignment="Center"/>
                             <s:Connector x:Name="Right" Orientation="Right" VerticalAlignment="Center" HorizontalAlignment="Right"/>
@@ -180,18 +180,19 @@
                             <s:Connector x:Name="SourceArc" OnlyOneConnectionCanStart="True" 
                          Visibility="Visible" VerticalAlignment="Top" HorizontalAlignment="Center"/>
                             <s:Connector x:Name="TargetArc" OnlyOneConnectionCanEnd="True" 
-                         Visibility="Visible" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                         Visibility="Visible" HorizontalAlignment="Right" VerticalAlignment="Center"
+                                         />
                         </Grid>
                         <!--<Control x:Name="PART_ConnectorDecorator"
                                  Template="{StaticResource ConnectorDecoratorTemplate}"/>-->
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <DataTrigger Value="False" Binding="{Binding RelativeSource={RelativeSource Self},Path=IsLinkSelf}">
+                        <!--<DataTrigger Value="False" Binding="{Binding RelativeSource={RelativeSource Self},Path=IsLinkSelf}">
                             <Setter TargetName="PART_ConnectorDecorator" Property="Visibility" Value="Collapsed"/>
                         </DataTrigger>
                         <DataTrigger Value="True" Binding="{Binding RelativeSource={RelativeSource Self},Path=IsLinkSelf}">
                             <Setter TargetName="PART_ConnectorDecorator" Property="Visibility" Value="Visible"/>
-                        </DataTrigger>
+                        </DataTrigger>-->
                         <DataTrigger Value="True" Binding="{Binding RelativeSource={RelativeSource Self},Path=IsGroup}">
                             <Setter TargetName="PART_DragThumb" Property="Visibility" Value="Collapsed"/>
                         </DataTrigger>

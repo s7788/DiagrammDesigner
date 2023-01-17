@@ -407,6 +407,7 @@ namespace DiagramDesigner
             this.Text = text;
             this.PathColor = pathColor;
             this.IsArc = isArc;
+            this.ShowShadow = false;
             //base.Unloaded += new RoutedEventHandler(Connection_Unloaded);
         }
 

@@ -161,24 +161,6 @@ namespace DiagramDesigner
             DependencyProperty.Register("ZIndex", typeof(int), typeof(DesignerItem), new PropertyMetadata(0));
         public Connector SourceArcSegmentAnchor { get; set; }
         public Connector TargetArcSegmentAnchor { get; set; }
-        //public Connector SourceArcSegmentAnchor
-        //{
-        //    get { return (Connector)GetValue(SourceArcSegmentAnchorProperty); }
-        //    set { SetValue(SourceArcSegmentAnchorProperty, value); }
-        //}
-
-        //public static readonly DependencyProperty SourceArcSegmentAnchorProperty =
-        //    DependencyProperty.Register("SourceArcSegmentAnchor", typeof(Connector), typeof(DesignerItem), new PropertyMetadata(null));
-
-        //public Connector TargetArcSegmentAnchor
-        //{
-        //    get { return (Connector)GetValue(TargetArcSegmentAnchorProperty); }
-        //    set { SetValue(TargetArcSegmentAnchorProperty, value); }
-        //}
-
-        //public static readonly DependencyProperty TargetArcSegmentAnchorProperty =
-        //    DependencyProperty.Register("TargetArcSegmentAnchor", typeof(Connector), typeof(DesignerItem), new PropertyMetadata(null));
-
         static DesignerItem()
         {
             // set the key to reference the style for this control
@@ -194,7 +176,7 @@ namespace DiagramDesigner
         public DesignerItem()
             : this(Guid.NewGuid())
         {
-            IsLinkSelf= true;
+            //IsLinkSelf= true;
         }
         
         public override void OnApplyTemplate()
