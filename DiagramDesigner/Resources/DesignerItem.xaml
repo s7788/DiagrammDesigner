@@ -2,7 +2,9 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib"
                     xmlns:s="clr-namespace:DiagramDesigner"
-                    xmlns:c="clr-namespace:DiagramDesigner.Controls">
+                    xmlns:c="clr-namespace:DiagramDesigner.Controls"
+                    xmlns:v="clr-namespace:DiagramDesigner.Converter">
+    <v:ObjectMarginConverter x:Key="objectMarginConverter" />
     <ContextMenu x:Key="DesignerItemContextMenu">
         <MenuItem Header="Start" Command="{x:Static s:DesignerCanvas.StartNode}">
             <!--<MenuItem.Icon>
@@ -108,9 +110,9 @@
             <s:Connector x:Name="Right" Orientation="Right" VerticalAlignment="Center" HorizontalAlignment="Right"/>
             <s:Connector x:Name="Bottom" Orientation="Bottom" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
             <s:Connector x:Name="SourceArc" OnlyOneConnectionCanStart="True" 
-                         Visibility="Visible" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+                         Visibility="Visible" VerticalAlignment="Top" Margin="0 0 0 10" HorizontalAlignment="Right"/>
             <s:Connector x:Name="TargetArc" OnlyOneConnectionCanEnd="True" 
-                         Visibility="Visible" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                         Visibility="Visible" HorizontalAlignment="Right" Margin="0 0 0 10" VerticalAlignment="Top"/>
         </Grid>
     </ControlTemplate>
 
@@ -148,7 +150,7 @@
     </Style>
 
     <!-- DesignerItem Style -->
-    <Style TargetType="{x:Type s:DesignerItem}">
+    <Style TargetType="{x:Type s:DesignerItem}" x:Name="Item">
         <Setter Property="MinWidth" Value="10"/>
         <Setter Property="MinHeight" Value="10"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
@@ -178,10 +180,12 @@
                             <s:Connector x:Name="Right" Orientation="Right" VerticalAlignment="Center" HorizontalAlignment="Right"/>
                             <s:Connector x:Name="Bottom" Orientation="Bottom" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
                             <s:Connector x:Name="SourceArc" OnlyOneConnectionCanStart="True" 
-                         Visibility="Visible" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+                         Visibility="Visible" VerticalAlignment="Top" HorizontalAlignment="Right"
+                                         Margin="{TemplateBinding Width,Converter={StaticResource objectMarginConverter},ConverterParameter=Width}"/>
                             <s:Connector x:Name="TargetArc" OnlyOneConnectionCanEnd="True" 
-                         Visibility="Visible" HorizontalAlignment="Right" VerticalAlignment="Center"
-                                         />
+                         Visibility="Visible" HorizontalAlignment="Right" VerticalAlignment="Top"
+                                         Margin="{TemplateBinding Height,Converter={StaticResource objectMarginConverter},ConverterParameter=Height}"/>
+
                         </Grid>
                         <!--<Control x:Name="PART_ConnectorDecorator"
                                  Template="{StaticResource ConnectorDecoratorTemplate}"/>-->
