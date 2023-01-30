@@ -386,6 +386,9 @@ namespace DiagramDesigner
                 OnPropertyChanged("IsArc");
             }
         }
+
+        public delegate void RemoveArcHandler();
+        public event RemoveArcHandler RemoveArc;
         static Connection()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(Connection), new FrameworkPropertyMetadata(typeof(Connection)));
@@ -582,6 +585,10 @@ namespace DiagramDesigner
         //    }
         //}
 
+        public void Remove()
+        {
+            RemoveArc?.Invoke();
+        }
         #region INotifyPropertyChanged Members
 
         // we could use DependencyProperties as well to inform others of property changes

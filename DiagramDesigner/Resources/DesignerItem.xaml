@@ -5,6 +5,7 @@
                     xmlns:c="clr-namespace:DiagramDesigner.Controls"
                     xmlns:v="clr-namespace:DiagramDesigner.Converter">
     <v:ObjectMarginConverter x:Key="objectMarginConverter" />
+    <BooleanToVisibilityConverter x:Key="booleanToVisibilityConverter" />
     <ContextMenu x:Key="DesignerItemContextMenu">
         <MenuItem Header="Start" Command="{x:Static s:DesignerCanvas.StartNode}">
             <!--<MenuItem.Icon>
@@ -150,7 +151,7 @@
     </Style>
 
     <!-- DesignerItem Style -->
-    <Style TargetType="{x:Type s:DesignerItem}" x:Name="Item">
+    <Style TargetType="{x:Type s:DesignerItem}">
         <Setter Property="MinWidth" Value="10"/>
         <Setter Property="MinHeight" Value="10"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
@@ -180,10 +181,10 @@
                             <s:Connector x:Name="Right" Orientation="Right" VerticalAlignment="Center" HorizontalAlignment="Right"/>
                             <s:Connector x:Name="Bottom" Orientation="Bottom" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
                             <s:Connector x:Name="SourceArc" OnlyOneConnectionCanStart="True" 
-                         Visibility="Visible" VerticalAlignment="Top" HorizontalAlignment="Right"
+                         Visibility="Hidden" VerticalAlignment="Top" HorizontalAlignment="Right"
                                          Margin="{TemplateBinding Width,Converter={StaticResource objectMarginConverter},ConverterParameter=Width}"/>
                             <s:Connector x:Name="TargetArc" OnlyOneConnectionCanEnd="True" 
-                         Visibility="Visible" HorizontalAlignment="Right" VerticalAlignment="Top"
+                         Visibility="Hidden" HorizontalAlignment="Right" VerticalAlignment="Top"
                                          Margin="{TemplateBinding Height,Converter={StaticResource objectMarginConverter},ConverterParameter=Height}"/>
 
                         </Grid>
@@ -206,8 +207,9 @@
                                 <Condition Value="False" Binding="{Binding RelativeSource={RelativeSource Self},Path=IsFixedSize}"/>
                                 <Condition Value="{x:Static sys:Guid.Empty}" Binding="{Binding RelativeSource={RelativeSource Self},Path=ParentID}"/>
                             </MultiDataTrigger.Conditions>
-                            <Setter TargetName="PART_ResizeDecorator" Property="Visibility" Value="Visible"/>
-                        </MultiDataTrigger>
+                            <Setter TargetName="PART_ResizeDecorator" Property="Visibility" Value="Collapsed"/>
+                        </MultiDataTrigger> 
+                        <!--s:DesignerCanvas-->
                         <Trigger Property="IsMouseOver" Value="true">
                             <Setter TargetName="PART_ConnectorDecorator" Property="Visibility" Value="Visible"/>
                         </Trigger>

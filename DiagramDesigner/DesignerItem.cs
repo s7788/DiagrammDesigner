@@ -130,7 +130,7 @@ namespace DiagramDesigner
 
         public Control ConnectorDecorator { get; private set; }
 
-
+        public bool HasArcLine { get; set; } = false;
         public int Layer
         {
             get { return (int)GetValue(LayerProperty); }
@@ -167,7 +167,6 @@ namespace DiagramDesigner
             FrameworkElement.DefaultStyleKeyProperty.OverrideMetadata(
                 typeof(DesignerItem), new FrameworkPropertyMetadata(typeof(DesignerItem)));
         }
-
         public DesignerItem(Guid id)
         {
             this.id = id;            
@@ -176,7 +175,7 @@ namespace DiagramDesigner
         public DesignerItem()
             : this(Guid.NewGuid())
         {
-            //IsLinkSelf= true;
+            IsLinkSelf= true;
         }
         
         public override void OnApplyTemplate()
@@ -235,5 +234,14 @@ namespace DiagramDesigner
 
             e.Handled = false;
         }        
+
+        public void OnAllowConnectSelf(bool flag)
+        {
+            IsLinkSelf = flag;
+        }
+        public void OnRemovedArcConection()
+        {
+            HasArcLine= false;
+        }
     }
 }

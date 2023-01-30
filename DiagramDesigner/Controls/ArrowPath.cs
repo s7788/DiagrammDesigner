@@ -131,7 +131,7 @@ namespace DiagramDesigner.Controls
                     if (!IsArc)
                         context.LineTo(point, true, true);
                     else
-                        context.ArcTo(point, new Size(50, 50), 90.0, true, SweepDirection.Clockwise, true, true);
+                        context.ArcTo(point, new Size(20, 20), 90.0, true, SweepDirection.Clockwise, true, true);
                 }
                 //The Previous Point (before the Endpoint) should be used for Angle Caluculation!
                 if (Points.Count > 1)

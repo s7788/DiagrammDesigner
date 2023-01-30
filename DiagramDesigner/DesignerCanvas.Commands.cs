@@ -1097,6 +1097,9 @@ namespace DiagramDesigner
                 connection.Source.Connections.Remove(connection);
                 connection.Sink.Connections.Remove(connection);
 
+                if (connection.IsArc)
+                    connection.Remove();
+
                 this.Children.Remove(connection);
 
                 raiseDesignerItemRemoved(connection, null);

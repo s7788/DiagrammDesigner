@@ -347,7 +347,6 @@ namespace DiagramDesigner
         public DesignerItem AddDesignerItem(FrameworkElement item, Point position, Size? size, int layer = 0, bool insertInBackground = false, Guid? itemGuid = null)
         {
             DesignerItem newItem = new DesignerItem();
-
             if (itemGuid != null)
                 newItem.ID = itemGuid.Value;
 

@@ -68,7 +68,8 @@ namespace DiagramDesigner
             }
 
             if (HitConnector != null && HitConnector.IsSinkConnector &&
-                (!HitConnector.OnlyOneConnectionCanEnd || !HitConnector.Connections.Any(x => Equals(x.Sink, HitConnector))))
+                (!HitConnector.OnlyOneConnectionCanEnd || !HitConnector.Connections.Any(x => Equals(x.Sink, HitConnector)))
+                && (!_isArc  ||   _isArc && !hitDesignerItem.HasArcLine))
 
             {
                 Connector sourceConnector = null;
@@ -76,6 +77,7 @@ namespace DiagramDesigner
                 //畫曲線
                 if (_isArc)
                 {
+                    hitDesignerItem.HasArcLine = true;
                     sourceConnector = hitDesignerItem.SourceArcSegmentAnchor;
                     sinkConnector = hitDesignerItem.TargetArcSegmentAnchor;
                 }
@@ -84,7 +86,13 @@ namespace DiagramDesigner
                     sourceConnector = this.sourceConnector;
                     sinkConnector = this.HitConnector;
                 }
-                Connection newConnection = designerCanvas.ConnectionGenerator(sourceConnector, sinkConnector,
+
+                if (_isArc)
+                    designerCanvas.PathFinder = PathFinderTypes.StraightPathFinder;
+                else
+                    designerCanvas.PathFinder = PathFinderTypes.OrthogonalPathFinderWithoutMargin;
+
+               Connection newConnection = designerCanvas.ConnectionGenerator(sourceConnector, sinkConnector,
                     designerCanvas.PathFinder, designerCanvas.GetPathText(), designerCanvas.GetPathColor(), _isArc);
                 
                 if (designerCanvas.ConnectionStyle != null)
@@ -95,6 +103,10 @@ namespace DiagramDesigner
 
                 this.designerCanvas.raiseDesignerCanvasChanged();
 
+                if (_isArc)
+                    newConnection.RemoveArc += hitDesignerItem.OnRemovedArcConection;
+
+                designerCanvas.PathFinder = PathFinderTypes.OrthogonalPathFinderWithoutMargin;
             }
             if (HitDesignerItem != null)
             {
