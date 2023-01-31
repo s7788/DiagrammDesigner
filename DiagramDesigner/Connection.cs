@@ -204,18 +204,18 @@ namespace DiagramDesigner
             }
         }
 
-        private string text = "";
+        private string _text = "";
         public string Text
         {
             get
             {
-                return text;
+                return _text;
             }
             set
             {
-                if (text != value)
+                if (_text != value)
                 {
-                    text = value;
+                    _text = value;
                     OnPropertyChanged("Text");
                 }
             }

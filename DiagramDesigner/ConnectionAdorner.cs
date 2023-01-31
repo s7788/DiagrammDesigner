@@ -121,6 +121,9 @@ namespace DiagramDesigner
 
         void thumbDragThumb_DragStarted(object sender, DragStartedEventArgs e)
         {
+            if (connection.IsArc)
+                return;
+
             this.HitDesignerItem = null;
             this.HitConnector = null;
             this.pathGeometry = null;
@@ -141,6 +144,9 @@ namespace DiagramDesigner
 
         void thumbDragThumb_DragDelta(object sender, DragDeltaEventArgs e)
         {
+            if (connection.IsArc)
+                return;
+
             Point currentPosition = Mouse.GetPosition(this);
             this.HitTesting(currentPosition);
             this.pathGeometry = UpdatePathGeometry(currentPosition);
@@ -228,7 +234,7 @@ namespace DiagramDesigner
             bool hitConnectorFlag = false;
 
             DependencyObject hitObject = designerCanvas.InputHitTest(hitPoint) as DependencyObject;
-            while (hitObject != null &&
+            while (hitObject != null && fixConnector != null &&
                   (hitObject != fixConnector.ParentDesignerItem || fixConnector.ParentDesignerItem.IsLinkSelf) &&
                    hitObject.GetType() != typeof(DesignerCanvas))
             {

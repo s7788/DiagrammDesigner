@@ -29,4 +29,7 @@
   <ItemGroup>
     <Resource Include="Resources\Images\*.*" />
   </ItemGroup>
+  <ItemGroup>
+    <None Remove="Resources\Images\expand-arrows.png" />
+  </ItemGroup>
 </Project>

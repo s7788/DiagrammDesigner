@@ -97,6 +97,7 @@
                         <!-- transparent extra space makes connector easier to hit -->
                         <!--<Rectangle Fill="Red" Margin="-2"/>-->
                         <Rectangle Fill="Lavender" StrokeThickness="1" Stroke="#AA000080"/>
+                        <!--<Ellipse Fill="Lavender" StrokeThickness="1" Stroke="#AA000080" />-->
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
