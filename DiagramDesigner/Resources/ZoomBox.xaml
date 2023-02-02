@@ -210,9 +210,9 @@
                             <Expander.Header>
                                 <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="40" />
-                                        <ColumnDefinition Width="30" />
+                                        <ColumnDefinition Width="2*" />
+                                        <ColumnDefinition Width="2*" />
+                                        <ColumnDefinition Width="1*" />
                                     </Grid.ColumnDefinitions>
                                     <Slider Name="PART_ZoomSlider"
                                             VerticalAlignment="Center"
@@ -225,16 +225,17 @@
                                             IsSnapToTickEnabled="False"
                                             IsMoveToPointEnabled="False" />
 
-                                    <TextBlock Text="{Binding ElementName=PART_ZoomSlider, StringFormat=N0, Path=Value}"
-                                               Grid.Column="1"
+                                    <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                        <TextBlock Text="{Binding ElementName=PART_ZoomSlider, StringFormat=N0, Path=Value}"
+                                               VerticalAlignment="Center"
+                                               HorizontalAlignment="Right" Margin="10 0"
+                                                />
+                                        <TextBlock Text="%"
                                                VerticalAlignment="Center"
                                                HorizontalAlignment="Right"
-                                               Margin="0,0,14,0" />
-                                    <TextBlock Text="%"
-                                               Grid.Column="1"
-                                               VerticalAlignment="Center"
-                                               HorizontalAlignment="Right"
-                                               Margin="1,0,2,0" />
+                                                />
+                                    </StackPanel>
+                                    
                                     <Button Grid.Column="2" Margin="5,0,0,0">
                                         <i:Interaction.Behaviors>
                                             <behaviors:DragDropBehavior DragObject="{Binding RelativeSource={RelativeSource TemplatedParent}}" />
