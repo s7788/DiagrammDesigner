@@ -57,7 +57,7 @@ namespace DiagramDesigner
                 OnPropertyChanged("SelectionLayer");
             }
         }
-
+        public bool IsFixedSize { get; set; }
         public event SelectionChangedEventHandler SelectionChanged;
 
         public void ClearSelection()
@@ -124,6 +124,18 @@ namespace DiagramDesigner
         public static readonly DependencyProperty MousePointProperty =
             DependencyProperty.Register("MousePoint", typeof(Point), typeof(Canvas), new PropertyMetadata(null));
 
+        #region Resize
+        public bool IsResize
+        {
+            get { return (bool)GetValue(IsResizeProperty); }
+            set { SetValue(IsResizeProperty, value); }
+        }
+        public static readonly DependencyProperty IsResizeProperty =
+            DependencyProperty.Register("IsResize",
+                                         typeof(bool),
+                                         typeof(DesignerCanvas),
+                                         new FrameworkPropertyMetadata(false));
+        #endregion
 
         void DesignerCanvas_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
@@ -350,6 +362,7 @@ namespace DiagramDesigner
             if (itemGuid != null)
                 newItem.ID = itemGuid.Value;
 
+            newItem.IsFixedSize = IsFixedSize;
             newItem.Content = item;
             newItem.Layer = layer;
             if (size.HasValue)

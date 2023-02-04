@@ -119,10 +119,11 @@
     </ControlTemplate>
 
     <!-- ResizeDecorator Default Template -->
-    <ControlTemplate x:Key="ResizeDecoratorTemplate" TargetType="{x:Type Control}">
+    <ControlTemplate x:Key="ResizeDecoratorTemplate" TargetType="{x:Type c:ResizeThumb}">
         <Grid Opacity="0.7" SnapsToDevicePixels="true">
             <c:ResizeThumb Height="3" Cursor="SizeNS" Margin="0 -4 0 0"
-                     VerticalAlignment="Top" HorizontalAlignment="Stretch"/>
+                     VerticalAlignment="Top" HorizontalAlignment="Stretch">
+            </c:ResizeThumb>
             <c:ResizeThumb Width="3" Cursor="SizeWE" Margin="-4 0 0 0"
                      VerticalAlignment="Stretch" HorizontalAlignment="Left"/>
             <c:ResizeThumb Width="3" Cursor="SizeWE" Margin="0 0 -4 0"
@@ -166,8 +167,8 @@
                         <c:DragThumb x:Name="PART_DragThumb" 
                                      Cursor="SizeAll"/>
                         <!-- PART_ResizeDecorator -->
-                        <Control x:Name="PART_ResizeDecorator" 
-                                 Visibility="Collapsed"
+                        <c:ResizeThumb x:Name="PART_ResizeDecorator" 
+                                 Visibility="Collapsed" 
                                  Template="{StaticResource ResizeDecoratorTemplate}"/>
                         <!-- PART_ContentPresenter -->
                         <ContentPresenter x:Name="PART_ContentPresenter"
@@ -199,16 +200,22 @@
                         <DataTrigger Value="True" Binding="{Binding RelativeSource={RelativeSource Self},Path=IsLinkSelf}">
                             <Setter TargetName="PART_ConnectorDecorator" Property="Visibility" Value="Visible"/>
                         </DataTrigger>-->
+                        <!--<DataTrigger Value="True" Binding="{Binding RelativeSource={RelativeSource Self},Path=IsFixedSize}">
+                            <Setter TargetName="PART_ResizeDecorator" Property="IsFixedSize" Value="True"/>
+                        </DataTrigger>
+                        <DataTrigger Value="False" Binding="{Binding RelativeSource={RelativeSource Self},Path=IsFixedSize}">
+                            <Setter TargetName="PART_ResizeDecorator" Property="IsFixedSize" Value="False"/>
+                        </DataTrigger>-->
                         <DataTrigger Value="True" Binding="{Binding RelativeSource={RelativeSource Self},Path=IsGroup}">
                             <Setter TargetName="PART_DragThumb" Property="Visibility" Value="Collapsed"/>
                         </DataTrigger>
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
                                 <Condition Value="True" Binding="{Binding RelativeSource={RelativeSource Self},Path=IsSelected}"/>
-                                <Condition Value="False" Binding="{Binding RelativeSource={RelativeSource Self},Path=IsFixedSize}"/>
+                                <!--<Condition Value="False" Binding="{Binding RelativeSource={RelativeSource Self},Path=IsFixedSize}"/>-->
                                 <Condition Value="{x:Static sys:Guid.Empty}" Binding="{Binding RelativeSource={RelativeSource Self},Path=ParentID}"/>
                             </MultiDataTrigger.Conditions>
-                            <Setter TargetName="PART_ResizeDecorator" Property="Visibility" Value="Collapsed"/>
+                            <Setter TargetName="PART_ResizeDecorator" Property="Visibility" Value="Visible"/>
                         </MultiDataTrigger> 
                         <!--s:DesignerCanvas-->
                         <Trigger Property="IsMouseOver" Value="true">

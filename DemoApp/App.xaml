@@ -4,11 +4,11 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
-        <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/DemoApp;component/Resources/Shared.xaml"/>                
-                <ResourceDictionary Source="/DemoApp;component/Resources/ApplicationToolbar.xaml"/>
-                <ResourceDictionary Source="/DemoApp;component/Resources/Stencils/FlowChartStencils.xaml"/>                
-        </ResourceDictionary.MergedDictionaries>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/DemoApp;component/Resources/Stencils/FlowChartStencils.xaml"/>
+                <ResourceDictionary Source="/DiagramDesigner;component/Resources/ApplicationToolbar.xaml"/>
+                <ResourceDictionary Source="/DiagramDesigner;component/Resources/Shared.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

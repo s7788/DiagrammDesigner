@@ -10,8 +10,12 @@ namespace DiagramDesigner.Controls
 {
     public class ResizeThumb : Thumb
     {
+        public bool IsFixedSize { get; set; } = true;
         public ResizeThumb()
         {
+            if (IsFixedSize)
+                return;
+
             base.DragDelta += new DragDeltaEventHandler(ResizeThumb_DragDelta);
         }
 
