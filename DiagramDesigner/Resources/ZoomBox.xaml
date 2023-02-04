@@ -9,8 +9,7 @@
     </ResourceDictionary.MergedDictionaries>
     <Style TargetType="{x:Type s:ZoomBox}">
         <Style.Resources>
-            <Style x:Key="ToggleButtonStyle"
-                   TargetType="ToggleButton">
+            <Style TargetType="ToggleButton">
                 <Setter Property="SnapsToDevicePixels" Value="true" />
                 <Setter Property="OverridesDefaultStyle" Value="true" />
                 <Setter Property="Template">
@@ -31,17 +30,17 @@
                             </Border>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsMouseOver" Value="true">
-                                    <Setter TargetName="Border" Property="Border.Background">
-                                        <Setter.Value>
+                                    <Setter TargetName="Border" Property="Border.Background"  Value="Gray">
+                                        <!--<Setter.Value>
                                             <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                                                 <GradientBrush.GradientStops>
                                                     <GradientStopCollection>
                                                         <GradientStop Color="#FF138CB8" Offset="0"/>
-                                                        <GradientStop Color="#FF71ABAF" Offset="1.0"/>
+                                                        <GradientStop Color="#FF00ABB7" Offset="1.0"/>
                                                     </GradientStopCollection>
                                                 </GradientBrush.GradientStops>
                                             </LinearGradientBrush>
-                                        </Setter.Value>
+                                        </Setter.Value>-->
                                     </Setter>
                                 </Trigger>
                             </ControlTemplate.Triggers>
@@ -56,7 +55,7 @@
                     <Setter.Value>
                         <ControlTemplate TargetType="Expander">
                             <DockPanel>
-                                <ToggleButton Style="{StaticResource ToggleButtonStyle}" x:Name="toggleBtn"
+                                <ToggleButton x:Name="toggleBtn"
                                               DockPanel.Dock="Top"
                                               IsChecked="{Binding Path=IsExpanded,Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                                               HorizontalContentAlignment="Left"
@@ -147,7 +146,7 @@
                     <!--<Border CornerRadius="1" BorderThickness="1" Background="#EEE" BorderBrush="Red">-->
                     <Expander IsExpanded="True" Background="Transparent">
                         <Grid Height="180" >
-                            <Border Background="Gray" CornerRadius="5" Margin="0 10"/>
+                            <Border Background="#FFABABAB" CornerRadius="5" Margin="0 10"/>
                             <Canvas Name="PART_ZoomCanvas" Margin="5">
                                 <Canvas.Background>
                                     <VisualBrush Stretch="Uniform" Visual="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ScrollViewer.Content}" />
@@ -168,7 +167,7 @@
                             </Canvas>
                         </Grid>
                         <Expander.Header>
-                            <Grid>
+                            <Grid Height="20">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="1*" />
                                     <ColumnDefinition Width="1*" />
@@ -184,15 +183,16 @@
                                             IsSnapToTickEnabled="False"
                                             IsMoveToPointEnabled="False">
                                 </Slider>
-                                <Button Grid.Column="1" BorderThickness="0" BorderBrush="Transparent" Background="Transparent">
+                                <Button Grid.Column="1" VerticalAlignment="Center"
+                                        BorderThickness="0" BorderBrush="Transparent" Background="Transparent">
                                     <i:Interaction.Behaviors>
                                         <behaviors:DragDropBehavior DragObject="{Binding RelativeSource={RelativeSource TemplatedParent}}" />
                                     </i:Interaction.Behaviors>
                                     <Button.Content>
-                                        <StackPanel Orientation="Horizontal">
+                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                                             <TextBlock Text="{Binding ElementName=PART_ZoomSlider, StringFormat=N0, Path=Value}"
-                                               VerticalAlignment="Center" HorizontalAlignment="Right"/>
-                                            <TextBlock Text="%" VerticalAlignment="Center"  HorizontalAlignment="Right" />
+                                               Foreground="Black" FontSize="10" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                                            <TextBlock Text="%" FontSize="10" Foreground="Black" VerticalAlignment="Center"  HorizontalAlignment="Right" />
                                         </StackPanel>
                                     </Button.Content>
                                 </Button>
